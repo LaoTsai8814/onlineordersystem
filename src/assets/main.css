@@ -1,0 +1,15 @@
+@import './base.css';
+html, body, #app {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    overflow: hidden !important; /* 禁止全頁面滾動，讓內部分別滾動 */
+}
+
+#app {
+    display: flex !important; /* 強制橫向併排 */
+    flex-direction: row !important;
+}
+
+
