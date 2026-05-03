@@ -2,7 +2,30 @@
 import {  RouterView } from 'vue-router'
 import NavigationBar from '@/components/NavigationBar.vue';
 import HeaderBar from '@/components/HeaderBar.vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+import { orderSignalR } from '@/services/SignalRService';
+import { ElNotification } from 'element-plus';
 
+const messages = ref<string[]>([]);
+
+onMounted(async () => {
+  await orderSignalR.start();
+
+  // 註冊監聽事件
+  orderSignalR.onReceiveUpdate((id, status) => {
+    messages.value.push(`訂單 ${id} 狀態更新為: ${status}`);
+
+    ElNotification({
+      title: '訂單更新',
+      message: `訂單 ${id} 目前狀態：${status}`,
+      type: 'success',
+    });
+  });
+});
+
+onUnmounted(() => {
+  // 離開頁面時視情況關閉連線，或保持連線在 App.vue
+});
 </script>
 
 <template>

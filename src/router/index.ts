@@ -73,9 +73,16 @@ const router = createRouter({
       path:'/product',
       name:'product',
       component: () => import('../views/ProductView.vue'),
-
-      props: route =>({token:route.query.token})
-
+    },
+    {
+      path:'/shopinfo',
+      name:'shopinfo',
+      component: () => import('../views/ShopInfoView.vue')
+    }
+    ,{
+      path:'/shop',
+      name:'shop',
+      component: () => import('../views/ShopView.vue')
     }
 
   ],

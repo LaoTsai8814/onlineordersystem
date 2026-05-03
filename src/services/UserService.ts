@@ -54,10 +54,13 @@ export function JWTDecode(str:string){
   const email = jsonobj["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]
   const usrid = jsonobj["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
   const usrname = jsonobj["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]
+  const shopid = jsonobj["ShopIdBelongTo"]
   usr.id = usrid;
   usr.email = email;
   usr.username = usrname;
+  usr.shopid = shopid;
   usr.token = str;
+  console.log(usr);
   const userStore = useUserStore()
   userStore.setUser(usr);
   localStorage.setItem('token', usr.token);

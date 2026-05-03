@@ -1,13 +1,15 @@
 import type { UserRole } from '@/ViewModels/User/UserRole.ts';
 
 export class GlobalUser {
-  id: number = 0;
+  id: string ="";
   username: string = "";
   email: string = "";
   token: string = "";
 
 
   roles: UserRole[] = [];
+
+  shopid:string="";
 
   expiresAt?: number;
   // 1. 建立一個靜態方法專門處理反序列化

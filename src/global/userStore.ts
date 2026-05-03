@@ -5,7 +5,7 @@ import type { UserRole } from '@/ViewModels/User/UserRole.ts';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    isLogin: !!localStorage.getItem('user'),
+    isLogin: !!localStorage.getItem('token'),
     userInfo: GlobalUser.deserialize(localStorage.getItem('user'))
   }),
   actions: {
@@ -34,12 +34,22 @@ export const useUserStore = defineStore('user', {
       return this.userInfo.roles;
 
     },
+    isShopCreated(): boolean {
+      return !!this.userInfo.shopid;
+    },
+    getShopId():string {
+      return this.userInfo.shopid;
+    },
+
+    removeUserRole(userRole: UserRole) {
+      this.userInfo.roles = this.userInfo.roles.filter(item => item !== userRole);
+    },
 
     // 登出
     async logout() {
       this.isLogin = false
       this.userInfo = new GlobalUser();
-      localStorage.removeItem('user')
+      localStorage.clear();
       await router.push('/home')
     },
     // 確認是否登入
