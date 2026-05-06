@@ -30,15 +30,16 @@
       <div class="footer-section">
         <span class="product-price">${{ product.price }}</span>
         <div class="action-buttons">
-          <el-button
+          <el-input-number v-if="!isShopOwner"  size="small" v-model="num" :min="0" :max="product.stock" @change="handleChange" />
+          <el-button v-if="!isShopOwner"
             type="primary"
             circle
             size="small"
             :icon="ShoppingCart"
-            @click.stop="$emit('add-to-cart', product)"
+            @click.stop="$emit('add-to-cart', product,num)"
             :disabled="product.stock <= 0"
           />
-          <el-button
+          <el-button v-if="isShopOwner"
             circle
             size="small"
             :icon="View"
@@ -54,17 +55,26 @@
 import { ShoppingCart, View, Picture } from '@element-plus/icons-vue';
 import type { ProductInfo } from '@/ViewModels/Product/ProductDTO.ts';
 import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import { ref } from 'vue'
 
+const isShopOwner = defineModel<boolean>('isShopOwner');
 defineProps<{ product: ProductInfo }>();
 defineEmits(['view-detail', 'add-to-cart']);
+
+
+const num = ref(1)
+const handleChange = (value: number | undefined) => {
+
+}
 </script>
 
 <style scoped>
 .product-card {
-  width: 260px; /* 固定寬度 */
+  width: 100%; /* 固定寬度 */
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s ease;
+  gap: 100px;       /* 設置卡片間距 */
   display: flex;
   flex-direction: column;
 }

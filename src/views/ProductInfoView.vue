@@ -4,14 +4,18 @@
       v-for="p in productList"
       :key="p.id"
       :product="p"
-      :isShopOwner="false"
-
+      :isShopOwner="true"
       @view-detail="handleViewDetail"
       @add-to-cart="handleAddToCart"
     />
   </div>
-
-
+  <el-button  type="primary" @click="drawer=true" >
+    <el-icon>
+      <Plus />
+    </el-icon>
+    <span>新增</span>
+  </el-button>
+  <ProductInfoDialog v-model:initialData="initdata" @success="handleOnSuccess" v-model:model-value="drawer"></ProductInfoDialog>
 </template>
 
 <script setup lang="ts">
@@ -23,7 +27,6 @@ import type { ProductInfo } from '@/ViewModels/Product/ProductDTO.ts';
 import { GetProductById, GetProductsByProductId } from '@/services/ProductService.ts';
 import { useUserStore } from '@/global/userStore.ts';
 import { UserRole } from '@/ViewModels/User/UserRole.ts';
-import { useCartStore } from '@/global/cartStore.ts';
 
 const drawer = ref<boolean>(false);
 const isShopOwner = defineModel<boolean>('isShopOwner')
@@ -44,7 +47,7 @@ const initdata = ref<ProductInfo>();
 onMounted(async () => {
   const userStore = useUserStore();
   productList.value=await GetProductById(userStore.getShopId());
-
+  isShopOwner.value = userStore.getUserRoles().includes(UserRole.ShopOwner)
 })
 
 const handleViewDetail = async (id: string) => {
@@ -57,9 +60,8 @@ const handleViewDetail = async (id: string) => {
   console.log('查看產品:', id);
 };
 
-const handleAddToCart = (product: ProductInfo,quantity: number) => {
-  const cartStore = useCartStore();
-  cartStore.addItemWithQuantity(product, quantity);
+const handleAddToCart = (product: any) => {
+  console.log('加入購物車:', product.name);
 };
 const handleOnSuccess = async () => {
   productList.value = await GetProductById(useUserStore().getShopId());

@@ -73,8 +73,9 @@
 import { ref, watch } from 'vue';
 import { Plus } from '@element-plus/icons-vue';
 import type { FormInstance, FormRules, UploadFile } from 'element-plus';
-import { AddProduct, GetProductById } from '@/services/ProductService.ts';
+import { AddProduct, GetProductById, UpdateProducts } from '@/services/ProductService.ts';
 import { useUserStore } from '@/global/userStore.ts';
+import { WebHostDomain } from '@/global/EnviromentDefine.ts';
 
 // 1. 定義 Props 與 Emits
 const props = defineProps<{
@@ -106,21 +107,34 @@ const rules: FormRules = {
   category: [{ required: true, message: '請選擇分類', trigger: 'change' }],
   price: [{ required: true, message: '請設定價格', trigger: 'blur' }],
 };
+watch(visible, (val) => emit('update:modelValue', val));
 
 // 4. 監聽彈窗開啟
-watch(() => props.modelValue, (val) => {
-  visible.value = val;
-  if (val && props.initialData) {
-    // 編輯模式：帶入初始資料
-    formdata.value = { ...props.initialData };
-    previewUrl.value = props.initialData.imageUrl || '';
-  } else if (val) {
-    // 新增模式：重置表單
-    resetForm();
-  }
-});
+// 修正後的監聽邏輯
+watch(
+  [() => props.modelValue, () => props.initialData],
+  ([newVisible, newData]) => {
+    visible.value = newVisible;
 
-watch(visible, (val) => emit('update:modelValue', val));
+    if (newVisible) {
+      if (newData && Object.keys(newData).length > 0) {
+        // 編輯模式：當拿到資料時填入
+        formdata.value = { ...newData };
+        // 處理圖片預覽
+        if (newData.image) {
+          previewUrl.value = WebHostDomain + newData.image;
+        } else {
+          previewUrl.value = '';
+        }
+      } else {
+        // 新增模式：沒有 initialData 時重置
+        resetForm();
+      }
+    }
+  },
+  { immediate: true, deep: true }
+);
+
 
 // 5. 處理檔案上傳預覽
 const handleFileChange = (file: UploadFile) => {
@@ -160,8 +174,13 @@ const handleSubmit = async () => {
         if (rawFile.value) {
           formData.append('formFile', rawFile.value);
         }
+        if(formdata.value.id){
+          await UpdateProducts(formData);
+        }
+        else{
+          await AddProduct(formData);
+        }
 
-        await AddProduct(formData);
         console.log('提交資料:', formdata.value);
 
         emit('success');

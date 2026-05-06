@@ -45,40 +45,53 @@
         </el-tag>
       </div>
 
-      <el-button
-        type="primary"
-        class="view-btn"
-        @click="$emit('view-detail', shop.id)"
-      >
-        編輯商店
-      </el-button>
+      <!-- 【重點修正】根據 isEditMode 顯示不同按鈕或隱藏 -->
+      <div class="action-area mt-4">
+        <!-- 模式 A: 作者/編輯模式 -> 顯示編輯商店 -->
+        <el-button
+          v-if="isEditMode"
+          type="primary"
+          class="view-btn"
+          @click="$emit('view-detail', shop.id)"
+        >
+          編輯商店
+        </el-button>
+
+        <!-- 模式 B: 顧客模式 -> 顯示進入商店 (或者你可以選擇完全隱藏) -->
+        <el-button
+          v-else
+          type="success"
+          plain
+          class="view-btn"
+          @click="$emit('enter-shop', shop.id)"
+        >
+          進入點餐
+        </el-button>
+      </div>
     </div>
   </el-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { StarFilled, Location, Document } from '@element-plus/icons-vue';
 import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import type { ShopInfo } from '@/ViewModels/Shop/ShopDTO.ts';
 
-defineProps({
-  shop: {
-    type: Object,
-    required: true,
-    default: () => ({
-      id: 1,
-      name: '預設商店',
-      description: '',
-      image: '',
-      rating: 4.5,
-      address: '台北市某個角落',
-      isOpen: true,
-      tags: ['美食', '咖啡']
-    })
-  }
+
+interface Props {
+  shop: ShopInfo;
+  isEditMode?: boolean;
+}
+
+// 使用 withDefaults 設定預設值
+const props = withDefaults(defineProps<Props>(), {
+  isEditMode: false
 });
 
-defineEmits(['view-detail']);
+// 定義事件：增加 enter-shop 給顧客用
+defineEmits(['view-detail', 'enter-shop']);
 </script>
+
 
 <style scoped>
 .shop-card {

@@ -69,6 +69,7 @@ const handleSuccess = () => {
       v-for="item in shops"
       :key="item.id"
       :shop="item"
+      :is-edit-mode="true"
       @view-detail="handleDetail"
     >
 

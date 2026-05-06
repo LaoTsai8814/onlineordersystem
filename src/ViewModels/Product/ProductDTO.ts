@@ -12,7 +12,10 @@ export interface GetProductRequestDTO{
 export interface GetProductResponseDTO{
   products:ProductInfo[]
 }
-
+export interface GetProductByProductIdResponseDTO
+{
+  product:ProductInfo;
+}
 export interface ProductInfo {
   id: string;
   name: string;

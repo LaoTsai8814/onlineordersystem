@@ -48,18 +48,23 @@ const userStore = useUserStore();
         <el-icon>< <shop/></el-icon>
         <template #title>Shops</template>
       </el-menu-item>
-      <el-menu-item index="/product" v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)" :disabled="!userStore.isShopCreated()">
+      <el-menu-item index="/product"  v-if="userStore.getUserRoles().includes(UserRole.Customer)">
         <el-icon>< <food/></el-icon>
         <template #title>Product</template>
       </el-menu-item>
-      <el-menu-item index="/order" :disabled="userStore.getUserRoles().includes(UserRole.ShopOwner)&&!userStore.isShopCreated()">
+      <el-menu-item index="/order" :disabled="!userStore.isShopCreated()">
         <el-icon>< <tickets/></el-icon>
         <template #title>Orders</template>
       </el-menu-item>
+      <el-menu-item index="/productInfo" v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)">
+        <el-icon><food/></el-icon>
+        <template #title>ProductInfo</template>
+      </el-menu-item>
       <el-menu-item index="/shopInfo" v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)">
-        <el-icon><info-filled/></el-icon>
+        <el-icon><shop/></el-icon>
         <template #title>ShopInfo</template>
       </el-menu-item>
+
       <el-menu-item index="4">
         <el-icon><setting /></el-icon>
         <template #title>Settings</template>

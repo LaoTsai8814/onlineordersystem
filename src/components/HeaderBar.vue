@@ -18,7 +18,7 @@ const getCustomerCartCount=async  () => {
       <div class="flex-grow" />
 
       <el-menu-item v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)" index="2">我的訂單</el-menu-item>
-      <el-menu-item v-if="userStore.getUserRoles().includes(UserRole.Customer)" index="3">
+      <el-menu-item v-if="userStore.getUserRoles().includes(UserRole.Customer)" index="cart">
         <el-badge :value="customerCartCount" class="item">
           <el-icon><ShoppingCart/></el-icon> 購物車
         </el-badge>
