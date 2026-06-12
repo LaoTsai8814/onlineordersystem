@@ -9,13 +9,22 @@
               <span>購物車 ({{ cartStore.totalItems }} 件商品)</span>
               <el-button type="danger" link @click="cartStore.clearCart">清空購物車</el-button>
             </div>
+
           </template>
 
           <div v-if="cartStore.items.length === 0" class="empty-cart">
             <el-empty description="購物車空空如也" />
           </div>
 
-          <div v-else class="cart-item" v-for="item in cartStore.items" :key="item.id">
+          <div v-else class="cart-item" v-for="item in cartStore.items" :key="item.cartItemId">
+            <el-checkbox
+              v-model="cartStore.selectedItems"
+              :value="item.cartItemId"
+
+              class="item-checkbox"
+            >
+            </el-checkbox>
+
             <el-image :src="WebHostDomain + item.image" fit="cover" class="item-image" />
 
             <div class="item-info">
@@ -27,15 +36,16 @@
                   <el-input-number
                     v-model="item.quantity"
                     :min="1"
+                    :max="item.stock"
                     size="small"
-                    @change="(val) => cartStore.updateQuantity(item.id, val)"
+                    @change="(val:number) => updateQuantity(item.id, item.cartItemId, val)"
                   />
                   <el-button
                     type="danger"
                     :icon="Delete"
                     circle
                     size="small"
-                    @click="cartStore.removeItem(item.id)"
+                    @click="removeItem(item.id, item.cartItemId)"
                   />
                 </div>
               </div>
@@ -75,17 +85,49 @@ import { Delete } from '@element-plus/icons-vue';
 import { useCartStore } from '@/global/cartStore.ts'; // 假設你建立此 Store
 import { WebHostDomain } from '@/global/EnviromentDefine.ts';
 import { ElMessage } from 'element-plus';
+import { computed, onMounted } from 'vue';
+import { removeItemFromCart, updateCart } from '@/services/CartService.ts';
+import { ref } from 'vue'
+import { GetShopNameById } from '@/services/ShopService.ts';
+import { addOrder } from '@/services/OrderService.ts';
+import { useUserStore } from '@/global/userStore.ts';
+
+const value = ref('')
+
+
+onMounted(async () => {
+  const cartStore = useCartStore();
+  await cartStore.GetAllCartItems();
+})
 
 const cartStore = useCartStore();
-
-const handleCheckout = () => {
-  if (cartStore.items.length === 0) {
-    ElMessage.warning('購物車內沒有商品');
+const userStore = useUserStore();
+const handleCheckout = async () => {
+  if (cartStore.selectedItems.length === 0) {
+    ElMessage.warning('請選擇要結帳的商品');
     return;
   }
-  // 實作結帳邏輯
-  console.log('進行結帳...', cartStore.items);
+
+  // 篩選出真正被勾選的完整商品資料送給後端
+  const checkoutPayload = cartStore.items.filter(item =>
+    cartStore.selectedItems.includes(item.cartItemId)
+  );
+  await addOrder(userStore.userInfo.id,cartStore.selectedItems);
+  console.log('進行結帳的商品為：', checkoutPayload);
 };
+const removeItem = async (productid:string,cartid: string) => {
+  const isSuccess = await removeItemFromCart(cartid);
+  if (isSuccess) {
+    cartStore.removeItem(productid);
+  }
+}
+const updateQuantity = async (productId:string,cartItemId:string, val:number)=>{
+  const isSuccess = await updateCart(cartItemId, val);
+
+  if (isSuccess) {
+    cartStore.updateQuantity(productId,val);
+  }
+}
 </script>
 
 <style scoped>

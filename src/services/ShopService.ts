@@ -42,9 +42,19 @@ export async function UpdateShopByShopId( formdata: FormData):Promise<void>{
     console.error(`[API Error] UpdateShopByShopId :`, error);
   }
 }
-
-export async function GetAllAvailableShop():Promise<ShopInfo[]>
-{
+export async function GetAllAvailableShop():Promise<ShopInfo[]> {
   const res:ResponseDTO<GetUserShopResponseDTO> = await api.get(`/Shop/GetAllAvailableShop`);
   return res.data.shopDTOs;
+}
+export async function GetShopNameById(id: string):Promise<string> {
+  try{
+    const res:ResponseDTO<string> = await api.get('/Shop/GetShopNameById/'+id);
+
+    return res.data as string;
+  }
+  catch(error){
+    console.error(`[API Error] GetShopNameById (${id}):`, error);
+    throw error;
+  }
+
 }

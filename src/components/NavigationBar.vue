@@ -1,7 +1,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { Expand, Fold, Food, InfoFilled, Monitor, Setting, Shop, Tickets } from '@element-plus/icons-vue';
+import { Expand, Fold, Food, InfoFilled, Monitor, Setting, Shop, Ticket, Tickets } from '@element-plus/icons-vue';
 import { useUserStore } from '@/global/userStore.ts';
 import { UserRole } from '@/ViewModels/User/UserRole.ts';
 
@@ -52,9 +52,13 @@ const userStore = useUserStore();
         <el-icon>< <food/></el-icon>
         <template #title>Product</template>
       </el-menu-item>
-      <el-menu-item index="/order" :disabled="!userStore.isShopCreated()">
-        <el-icon>< <tickets/></el-icon>
+      <el-menu-item index="/order" :disabled="!userStore.getUserRoles().includes(UserRole.Customer)">
+        <el-icon>< <ticket/></el-icon>
         <template #title>Orders</template>
+      </el-menu-item>
+      <el-menu-item index="/orderInfo" :disabled="!userStore.isShopCreated()">
+        <el-icon>< <tickets/></el-icon>
+        <template #title>OrderInfo</template>
       </el-menu-item>
       <el-menu-item index="/productInfo" v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)">
         <el-icon><food/></el-icon>

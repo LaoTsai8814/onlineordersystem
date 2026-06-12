@@ -23,5 +23,10 @@ export interface ProductInfo {
   description: string;
   image: string;
   stock: number;
+  shopId: string;
   category?: string;
+}
+export interface GetProductsByShopIdResponseDTO
+{
+   products: ProductInfo[];
 }

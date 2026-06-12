@@ -1,7 +1,7 @@
 import type {
   AddProductResponseDTO,
   GetProductByProductIdResponseDTO,
-  GetProductResponseDTO,
+  GetProductResponseDTO, GetProductsByShopIdResponseDTO,
   ProductInfo
 } from '@/ViewModels/Product/ProductDTO.ts';
 import api from '@/plugins/axios.ts';
@@ -22,6 +22,7 @@ export async function AddProduct(formdata:FormData): Promise<AddProductResponseD
   }
 }
 export async function GetProductById(shopId:string): Promise<ProductInfo[]> {
+  console.log(shopId);
   try{
     const res:ResponseDTO<GetProductResponseDTO> = await api.post("/Product/GetProductsByShopId", { shopId: shopId });
     return res.data.products
@@ -46,6 +47,21 @@ export async function GetProductsByProductId(productId:string): Promise<ProductI
   }
 
 }
+
+export async function GetAllAvailableProducts(): Promise<ProductInfo[]> {
+    try{
+      const res:ResponseDTO<GetProductsByShopIdResponseDTO> = await api.get("/Product/GetAllAvailableProduct");
+
+      return res.data.products as ProductInfo[];
+    }
+    catch(err){
+      console.error(err);
+      return []
+    }
+
+
+}
+
 export async function UpdateProducts(formData:FormData): Promise<void> {
   try{
     const userStore = useUserStore();

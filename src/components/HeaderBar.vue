@@ -8,6 +8,8 @@ import { GetCustomerCartCount } from '@/services/UserService.ts';
 const islogin = defineModel<boolean>('islogin');
 const userStore = useUserStore();
 const customerCartCount = ref(0);
+
+
 const getCustomerCartCount=async  () => {
   customerCartCount.value = await GetCustomerCartCount()
 };
@@ -17,7 +19,7 @@ const getCustomerCartCount=async  () => {
     <el-menu  mode="horizontal" :ellipsis="false" class="nav-menu " router >
       <div class="flex-grow" />
 
-      <el-menu-item v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)" index="2">我的訂單</el-menu-item>
+      <el-menu-item v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)" index="orderInfo">我的訂單</el-menu-item>
       <el-menu-item v-if="userStore.getUserRoles().includes(UserRole.Customer)" index="cart">
         <el-badge :value="customerCartCount" class="item">
           <el-icon><ShoppingCart/></el-icon> 購物車

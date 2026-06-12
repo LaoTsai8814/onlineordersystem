@@ -31,15 +31,7 @@ import { UserRole } from '@/ViewModels/User/UserRole.ts';
 const drawer = ref<boolean>(false);
 const isShopOwner = defineModel<boolean>('isShopOwner')
 const productList = ref<ProductInfo[]>([
-  {
-    id: '1',
-    name: '珍珠奶茶',
-    price: 65,
-    description: '經典台灣風味，甜而不膩。',
-    image: 'https://example.com/tea.jpg',
-    stock: 10,
-    category: '飲品'
-  }
+
 ]);
 
 const initdata = ref<ProductInfo>();

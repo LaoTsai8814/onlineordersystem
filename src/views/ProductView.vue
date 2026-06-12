@@ -20,30 +20,21 @@ import { onMounted, ref } from 'vue';
 import ProductInfoDialog from '@/components/ProductInfoDialog.vue';
 import { Plus } from '@element-plus/icons-vue';
 import type { ProductInfo } from '@/ViewModels/Product/ProductDTO.ts';
-import { GetProductById, GetProductsByProductId } from '@/services/ProductService.ts';
+import { GetAllAvailableProducts, GetProductById, GetProductsByProductId } from '@/services/ProductService.ts';
 import { useUserStore } from '@/global/userStore.ts';
 import { UserRole } from '@/ViewModels/User/UserRole.ts';
 import { useCartStore } from '@/global/cartStore.ts';
+import { addItemToCart } from '@/services/CartService.ts';
 
 const drawer = ref<boolean>(false);
 const isShopOwner = defineModel<boolean>('isShopOwner')
-const productList = ref<ProductInfo[]>([
-  {
-    id: '1',
-    name: '珍珠奶茶',
-    price: 65,
-    description: '經典台灣風味，甜而不膩。',
-    image: 'https://example.com/tea.jpg',
-    stock: 10,
-    category: '飲品'
-  }
-]);
+const productList = ref<ProductInfo[]>([]);
 
 const initdata = ref<ProductInfo>();
 
 onMounted(async () => {
   const userStore = useUserStore();
-  productList.value=await GetProductById(userStore.getShopId());
+  productList.value=await GetAllAvailableProducts();
 
 })
 
@@ -57,9 +48,11 @@ const handleViewDetail = async (id: string) => {
   console.log('查看產品:', id);
 };
 
-const handleAddToCart = (product: ProductInfo,quantity: number) => {
+const handleAddToCart = (product: ProductInfo,quantity: number,cartId:string) => {
   const cartStore = useCartStore();
-  cartStore.addItemWithQuantity(product, quantity);
+  const userStore = useUserStore();
+  cartStore.addItemWithQuantity(product, quantity,product.price,cartId);
+  addItemToCart(product,quantity,userStore.userInfo.id)
 };
 const handleOnSuccess = async () => {
   productList.value = await GetProductById(useUserStore().getShopId());

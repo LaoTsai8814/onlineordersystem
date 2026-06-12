@@ -6,7 +6,9 @@ class OrderSignalRService {
 
   constructor() {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl(WebHostDomain+"orderHub") // 後端映射的路徑
+      .withUrl(WebHostDomain+"orderHub",{
+        accessTokenFactory: () => localStorage.getItem('token') || ''
+      }) // 後端映射的路徑
       .withAutomaticReconnect() // 自動重連
       .build();
   }
