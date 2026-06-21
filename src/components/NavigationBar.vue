@@ -52,15 +52,15 @@ const userStore = useUserStore();
         <el-icon>< <food/></el-icon>
         <template #title>Product</template>
       </el-menu-item>
-      <el-menu-item index="/order" :disabled="!userStore.getUserRoles().includes(UserRole.Customer)">
+      <el-menu-item index="/order" v-if="userStore.getUserRoles().includes(UserRole.Customer)">
         <el-icon>< <ticket/></el-icon>
         <template #title>Orders</template>
       </el-menu-item>
-      <el-menu-item index="/orderInfo" :disabled="!userStore.isShopCreated()">
+      <el-menu-item index="/orderInfo" v-if="userStore.isShopCreated()">
         <el-icon>< <tickets/></el-icon>
         <template #title>OrderInfo</template>
       </el-menu-item>
-      <el-menu-item index="/productInfo" v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)">
+      <el-menu-item index="/productInfo" v-if="userStore.getUserRoles().includes(UserRole.ShopOwner)" :disabled="!userStore.isShopCreated()" >
         <el-icon><food/></el-icon>
         <template #title>ProductInfo</template>
       </el-menu-item>

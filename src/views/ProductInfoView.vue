@@ -38,6 +38,7 @@ const initdata = ref<ProductInfo>();
 
 onMounted(async () => {
   const userStore = useUserStore();
+  console.log(userStore.userInfo);
   productList.value=await GetProductById(userStore.getShopId());
   isShopOwner.value = userStore.getUserRoles().includes(UserRole.ShopOwner)
 })

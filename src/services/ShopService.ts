@@ -1,25 +1,32 @@
 import type { ResponseDTO } from '@/ViewModels/ResponseDTO.ts';
 import api from '@/plugins/axios.ts';
 import type {
+  AddShopResponseDTO,
   GetShopByShopIdResponseDTO,
-  GetUserShopResponseDTO,
+  GetUserShopResponseDTO, GetUserShopsResponseDTO,
   ShopForm,
   ShopInfo
 } from '@/ViewModels/Shop/ShopDTO.ts';
 import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import { useUserStore } from "@/global/userStore";
 
+const userStore = useUserStore();
 export async function AddShop(formdata: FormData):Promise<boolean>
 {
-  const res:ResponseDTO<any> = await api.post('/Shop/AddShop', formdata, {
+  const res:ResponseDTO<AddShopResponseDTO> = await api.post('/Shop/AddShop', formdata, {
   });
+
+  userStore.addShop(res.data.shopId) ;
+  console.log("Added ShopId is"+userStore.getShopId()) ;
+
   return res.isSuccess;
 }
-export async function GetShopByUserId(id: string):Promise<ShopInfo[]>
+export async function GetShopByUserId(id: string):Promise<ShopInfo|undefined>
 {
   const res:ResponseDTO<GetUserShopResponseDTO> = await api.post('/Shop/GetShopByUserId', {userId: id});
   if(res.isSuccess)
-    return res.data.shopDTOs;
-  return []
+    return res.data.shopDTO;
+  return undefined
 }
 export async function GetShopByShopId(id: string): Promise<ShopInfo> {
   try {
@@ -43,7 +50,7 @@ export async function UpdateShopByShopId( formdata: FormData):Promise<void>{
   }
 }
 export async function GetAllAvailableShop():Promise<ShopInfo[]> {
-  const res:ResponseDTO<GetUserShopResponseDTO> = await api.get(`/Shop/GetAllAvailableShop`);
+  const res:ResponseDTO<GetUserShopsResponseDTO> = await api.get(`/Shop/GetAllAvailableShop`);
   return res.data.shopDTOs;
 }
 export async function GetShopNameById(id: string):Promise<string> {

@@ -17,3 +17,6 @@ export interface GetOrderResponseDTO{
   customerPhone:string
   customerAddress:string
 }
+export interface GetCustomerOrderResponseDTO{
+  orderList:GetOrderResponseDTO[]
+}

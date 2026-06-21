@@ -4,13 +4,16 @@ export interface AddShopRequestDTO{
 }
 
 export interface AddShopResponseDTO{
-  id:string;
+  shopId:string;
 }
 //NotUsed
 export interface GetUserShopRequestDTO{
   userid:string;
 }
 export interface GetUserShopResponseDTO{
+  shopDTO : ShopInfo;
+}
+export interface GetUserShopsResponseDTO{
   shopDTOs : ShopInfo[];
 }
 export interface GetShopByShopIdRequestDTO{

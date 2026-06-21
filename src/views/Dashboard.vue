@@ -21,6 +21,11 @@ else if(userStore.getUserRoles().includes(UserRole.ShopOwner)){
 else if(userStore.getUserRoles().includes(UserRole.Admin)){
   activeName.value = 'Admin';
 }
+const OnButtonClick = ()=>{
+  const userStore = useUserStore();
+
+  console.log(userStore.userInfo);
+}
 
 </script>
 <template>
@@ -41,7 +46,9 @@ else if(userStore.getUserRoles().includes(UserRole.Admin)){
     </el-tab-pane>
   </el-tabs>
   <el-container >
+    <el-button @click ="OnButtonClick">
 
+    </el-button>
   </el-container>
 </template>
 

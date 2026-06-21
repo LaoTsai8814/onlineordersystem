@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+// @ts-ignore
+// @ts-ignore
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -75,9 +77,19 @@ const router = createRouter({
       component: () => import('../views/ProductView.vue'),
     },
     {
-      path:'/shopinfo',
-      name:'shopinfo',
+      path:'/shopInfo',
+      name:'shopInfo',
       component: () => import('../views/ShopInfoView.vue')
+    },
+    {
+      path:'/shopInfo/create',
+      name:'createshopinfo',
+      component: () => import('../views/ShopEditView.vue')
+    },
+    {
+      path:'/shopInfo/edit',
+      name:'editshopinfo',
+      component: () => import('../views/ShopEditView.vue')
     }
     ,{
       path:'/shop',

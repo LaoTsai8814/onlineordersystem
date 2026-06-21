@@ -1,4 +1,8 @@
-import type { GetOrdersByShopIdResponseDTO } from '@/ViewModels/Order/OrderDTO.ts';
+import type {
+  GetCustomerOrderResponseDTO,
+  GetOrderResponseDTO,
+  GetOrdersByShopIdResponseDTO
+} from '@/ViewModels/Order/OrderDTO.ts';
 import type { ResponseDTO } from '@/ViewModels/ResponseDTO.ts';
 import api from '@/plugins/axios.ts';
 
@@ -35,4 +39,8 @@ export async function UpdateOrder(orderId:string,isAccepted:boolean): Promise<vo
     throw err;
   }
 
+}
+export async function GetOrderByCustomerId(CustomerId:string):Promise<GetOrderResponseDTO[]>{
+  const response:ResponseDTO<GetCustomerOrderResponseDTO> = await api.post("/Order/GetOrdersByCustomerId",{userId: CustomerId});
+  return response.data.orderList
 }

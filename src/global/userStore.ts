@@ -36,11 +36,17 @@ export const useUserStore = defineStore('user', {
 
     },
     isShopCreated(): boolean {
-      return !!this.userInfo.shopid;
+      return (this.userInfo.shopid!==undefined) && (this.userInfo.shopid!=="");
+    },
+    addShop(shopId:string):void {
+      const user = this.userInfo;
+      this.userInfo.shopid = shopId;
+      localStorage.setItem('user', JSON.stringify(user))
     },
     getShopId():string {
       return this.userInfo.shopid;
     },
+
 
     removeUserRole(userRole: UserRole) {
       this.userInfo.roles = this.userInfo.roles.filter(item => item !== userRole);
