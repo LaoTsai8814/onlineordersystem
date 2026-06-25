@@ -29,10 +29,10 @@ export async function GetOrderByShopId(shopId:string): Promise<ResponseDTO<GetOr
     throw err;
   }
 }
-export async function UpdateOrder(orderId:string,isAccepted:boolean): Promise<void>
+export async function UpdateOrder(orderId:string,isAccepted:number): Promise<void>
 {
   try{
-    const res = await api.post("/Order/UpdateOrderStatus",{orderId:orderId,isAccepted:isAccepted});
+    const res = await api.post("/Order/UpdateOrderStatus",{orderId:orderId,orderStatus:isAccepted});
   }
   catch(err) {
     console.error(err);

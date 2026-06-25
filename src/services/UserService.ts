@@ -30,13 +30,15 @@ export async function GetUserRoleClaim():Promise<boolean>
 
 
 }
-export async function AddUserRoleClaim(role:UserRole):Promise<boolean>
+export async function AddPersonlInfo(role:UserRole,address:string,phone:string):Promise<boolean>
 {
   const dto: AddRoleToUserRequestDTO = {
-    RoleType: role
+    RoleType: role,
+    Address:address,
+    PhoneNumber:phone
   };
   console.log(dto);
-  const res:ResponseDTO<AddRoleToUserResponseDTO> = await api.put("User/AddUserRoleClaim", dto)
+  const res:ResponseDTO<AddRoleToUserResponseDTO> = await api.put("User/AddPersonlInfo", dto)
   if(res.isSuccess){
     console.log("Added UserRoleClaim");
     const userStore = useUserStore()

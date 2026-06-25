@@ -37,7 +37,7 @@
             <el-button size="small" type="success" plain @click="handleUpdateStatus(scope.row.id, 1)">
               接單
             </el-button>
-            <el-button size="small" type="danger" plain @click="handleUpdateStatus(scope.row.id, -1)">
+            <el-button size="small" type="danger" plain @click="handleUpdateStatus(scope.row.id, 3)">
               拒絕
             </el-button>
           </el-button-group>
@@ -46,7 +46,7 @@
             <el-button size="small" type="primary" plain @click="handleUpdateStatus(scope.row.id, 2)">
               完成
             </el-button>
-            <el-button size="small" type="danger" plain @click="handleUpdateStatus(scope.row.id, -1)">
+            <el-button size="small" type="danger" plain @click="handleUpdateStatus(scope.row.id, 3)">
               取消
             </el-button>
           </el-button-group>
@@ -136,7 +136,7 @@ const getStatusTag = (status: number) => {
     case 0: return 'warning'; // 待處理
     case 1: return 'primary'; // 進行中
     case 2: return 'success'; // 已完成
-    case -1: return 'info';    // 已取消
+    case 3: return 'info';    // 已取消
     default: return '';
   }
 };
@@ -147,7 +147,7 @@ const getStatusText = (status: number) => {
     case 0: return '待接單';
     case 1: return '配送中/製作中';
     case 2: return '已完成';
-    case -1: return '已取消';
+    case 3: return '已取消';
     default: return '未知狀態';
   }
 };
