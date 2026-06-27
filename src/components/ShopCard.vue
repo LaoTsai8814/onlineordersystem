@@ -32,18 +32,20 @@
         <el-icon><Location /></el-icon>
         <span class="address-text">{{ shop.address }}</span>
       </div>
+      <!--
+          <div class="shop-tags">
+                  <el-tag
+                    v-for="tag in shop.tags"
+                    :key="tag"
+                    size="small"
+                    class="tag-item"
+                    effect="plain"
+                  >
+                    {{ tag }}
+                  </el-tag>
+          </div>
+      -->
 
-      <div class="shop-tags">
-        <el-tag
-          v-for="tag in shop.tags"
-          :key="tag"
-          size="small"
-          class="tag-item"
-          effect="plain"
-        >
-          {{ tag }}
-        </el-tag>
-      </div>
 
       <!-- 【重點修正】根據 isEditMode 顯示不同按鈕或隱藏 -->
       <div class="action-area mt-4">

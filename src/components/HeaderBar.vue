@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineModel, ref } from 'vue';
+import { ref } from 'vue';
 import { useUserStore } from '@/global/userStore.ts';
 import { ShoppingCart } from '@element-plus/icons-vue';
 import { UserRole } from '@/ViewModels/User/UserRole.ts';

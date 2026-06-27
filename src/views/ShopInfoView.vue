@@ -45,7 +45,7 @@
           </div>
 
           <el-divider />
-
+          <!--
           <div class="info-item flex-column">
             <span class="label">商店標籤：</span>
             <div class="shop-tags mt-2">
@@ -61,6 +61,7 @@
               <span v-if="!shop.tags || shop.tags.length === 0" class="text-gray">暫無標籤</span>
             </div>
           </div>
+          -->
         </el-card>
       </el-col>
 
@@ -111,7 +112,6 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { StarFilled, Location, Document } from '@element-plus/icons-vue';
-import { WebHostDomain } from '@/global/EnviromentDefine.ts';
 import { useUserStore } from "@/global/userStore.ts";
 import { GetShopByShopId } from "@/services/ShopService.ts";
 import type { ShopInfo } from '@/ViewModels/Shop/ShopDTO.ts';
