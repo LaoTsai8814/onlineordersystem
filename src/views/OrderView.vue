@@ -91,7 +91,7 @@ const cancelMyOrder = async (orderId: string) => {
       type: 'warning',
     });
 
-    await UpdateOrder(orderId, false);
+    await UpdateOrder(orderId, 3);
     ElMessage.success('訂單已成功取消');
     const userStore = useUserStore();
     await fetchCustomerOrders(userStore.userInfo.id);
