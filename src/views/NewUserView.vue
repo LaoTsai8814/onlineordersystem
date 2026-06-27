@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { UserRole } from '@/ViewModels/User/UserRole.ts'
-import { AddPersonlInfo, AddUserRoleClaim, JWTDecode } from '@/services/UserService.ts';
+import { AddPersonlInfo, JWTDecode } from '@/services/UserService.ts';
 import router from '@/router'
 
 const props = defineProps(['token'])
