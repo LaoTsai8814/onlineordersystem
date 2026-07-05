@@ -6,7 +6,7 @@ class OrderSignalRService {
 
   constructor() {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl(WebHostDomain+"orderHub",{
+      .withUrl('https://onlineordersystem.duckdns.org/'+'orderHub',{
         accessTokenFactory: () => localStorage.getItem('token') || ''
       }) // 後端映射的路徑
       .withAutomaticReconnect() // 自動重連
