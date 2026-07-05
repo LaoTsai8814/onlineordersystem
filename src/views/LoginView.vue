@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const googleLogin = async ()=>{
-  window.location.href = "https://localhost:7214/api/User/GoogleLogin";
+  window.location.href = "https://onlineordersystem.duckdns.org/api/User/GoogleLogin";
 };
 
 </script>
