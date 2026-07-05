@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import {WebHostDomain} from "@/global/EnviromentDefine.ts";
+
 const googleLogin = async ()=>{
-  window.location.href = "https://onlineordersystem.duckdns.org/api/User/GoogleLogin";
+  window.location.href = WebHostDomain+'api/User/GoogleLogin';
 };
 
 </script>

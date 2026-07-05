@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import { WebHostDomain } from '@/global/EnviromentDefine.ts';
 
  export const api = axios.create({
-  baseURL: (WebHostDomain || 'https://onlineordersystem.duckdns.org/') + "api/",
+  baseURL: WebHostDomain + "api/",
   timeout:5000
 })
 interface MyTokenPayload {
