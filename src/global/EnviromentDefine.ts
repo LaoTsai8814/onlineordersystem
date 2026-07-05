@@ -1,2 +1,2 @@
 // src/api/config.ts
-export const WebHostDomain = import.meta.env.VITE_API_BASE_URL as string;
+export const WebHostDomain = "https://onlineordersystem.duckdns.org/";
