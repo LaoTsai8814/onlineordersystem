@@ -2,7 +2,7 @@
   <el-card :body-style="{ padding: '0px' }" class="product-card" shadow="hover">
     <!-- 1. 圖片區：固定比例與高度 -->
     <div class="image-wrapper">
-      <el-image :src="WebHostDomain+product.image" fit="cover" class="product-image">
+      <el-image :src="FileHostDomain+product.image" fit="cover" class="product-image">
         <template #error>
           <div class="image-placeholder">
             <el-icon :size="40"><Picture /></el-icon>
@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { ShoppingCart, View, Picture } from '@element-plus/icons-vue';
 import type { ProductInfo } from '@/ViewModels/Product/ProductDTO.ts';
-import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import { FileHostDomain } from '@/global/EnviromentDefine.ts';
 import { ref } from 'vue'
 
 const isShopOwner = defineModel<boolean>('isShopOwner');

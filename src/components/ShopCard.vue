@@ -2,7 +2,7 @@
   <el-card class="shop-card" :body-style="{ padding: '0px' }" shadow="hover">
     <div class="image-container">
       <el-image
-        :src="WebHostDomain+shop.image || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500'"
+        :src="FileHostDomain+shop.image || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500'"
         fit="cover"
         class="shop-image"
       />
@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { StarFilled, Location, Document } from '@element-plus/icons-vue';
-import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import { FileHostDomain } from '@/global/EnviromentDefine.ts';
 import type { ShopInfo } from '@/ViewModels/Shop/ShopDTO.ts';
 
 

@@ -75,7 +75,7 @@ import { Plus } from '@element-plus/icons-vue';
 import type { FormInstance, FormRules, UploadFile } from 'element-plus';
 import { AddProduct, GetProductById, UpdateProducts } from '@/services/ProductService.ts';
 import { useUserStore } from '@/global/userStore.ts';
-import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import { FileHostDomain } from '@/global/EnviromentDefine.ts';
 
 // 1. 定義 Props 與 Emits
 const props = defineProps<{
@@ -122,7 +122,7 @@ watch(
         formdata.value = { ...newData };
         // 處理圖片預覽
         if (newData.image) {
-          previewUrl.value = WebHostDomain + newData.image;
+          previewUrl.value = FileHostDomain + newData.image;
         } else {
           previewUrl.value = '';
         }

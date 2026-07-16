@@ -5,6 +5,7 @@ import type {
 } from '@/ViewModels/Order/OrderDTO.ts';
 import type { ResponseDTO } from '@/ViewModels/ResponseDTO.ts';
 import api from '@/plugins/axios.ts';
+import {useCartStore} from "@/global/cartStore.ts";
 
 export async function addOrder(userid: string,cartids:string[]): Promise<void> {
   try {
@@ -14,6 +15,9 @@ export async function addOrder(userid: string,cartids:string[]): Promise<void> {
 
 
     })
+    const cartStore = useCartStore();
+    cartids.forEach(cartid => {cartStore.removeItem(cartid);})
+
   }
   catch(err) {
     console.error(err);

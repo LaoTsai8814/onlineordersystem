@@ -7,7 +7,7 @@ import type {
   ShopForm,
   ShopInfo
 } from '@/ViewModels/Shop/ShopDTO.ts';
-import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import { FileHostDomain } from '@/global/EnviromentDefine.ts';
 import { useUserStore } from "@/global/userStore";
 
 const userStore = useUserStore();
@@ -32,7 +32,7 @@ export async function GetShopByShopId(id: string): Promise<ShopInfo> {
   try {
     // 假設 ResponseDTO 包含 isSuccess, data, message
     const res: ResponseDTO<GetShopByShopIdResponseDTO> = await api.post('/Shop/GetShopByShopId', { shopId: id });
-    res.data.shopDTO.image = WebHostDomain+res.data.shopDTO.image;
+    res.data.shopDTO.image = FileHostDomain+res.data.shopDTO.image;
     return res.data.shopDTO;
 
   } catch (error) {

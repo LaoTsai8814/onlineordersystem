@@ -25,7 +25,7 @@
             >
             </el-checkbox>
 
-            <el-image :src="WebHostDomain + item.image" fit="cover" class="item-image" />
+            <el-image :src="FileHostDomain + item.image" fit="cover" class="item-image" />
 
             <div class="item-info">
               <h4 class="item-name">{{ item.name }}</h4>
@@ -83,12 +83,11 @@
 <script setup lang="ts">
 import { Delete } from '@element-plus/icons-vue';
 import { useCartStore } from '@/global/cartStore.ts'; // 假設你建立此 Store
-import { WebHostDomain } from '@/global/EnviromentDefine.ts';
+import { FileHostDomain } from '@/global/EnviromentDefine.ts';
 import { ElMessage } from 'element-plus';
-import { computed, onMounted } from 'vue';
+import {  onMounted } from 'vue';
 import { removeItemFromCart, updateCart } from '@/services/CartService.ts';
 import { ref } from 'vue'
-import { GetShopNameById } from '@/services/ShopService.ts';
 import { addOrder } from '@/services/OrderService.ts';
 import { useUserStore } from '@/global/userStore.ts';
 
@@ -113,7 +112,8 @@ const handleCheckout = async () => {
     cartStore.selectedItems.includes(item.cartItemId)
   );
   await addOrder(userStore.userInfo.id,cartStore.selectedItems);
-  console.log('進行結帳的商品為：', checkoutPayload);
+  cartStore.selectedItems.forEach((item) => {cartStore.removeItem(item)})
+
 };
 const removeItem = async (productid:string,cartid: string) => {
   const isSuccess = await removeItemFromCart(cartid);
